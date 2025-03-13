@@ -17,7 +17,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
 
     await next();
   } catch (error) {
-    return c.json({ error: (error as Error).message }, 500);
+    return c.json({ message: 'You are not Loggedin' }, 403);
   }
 }
 
