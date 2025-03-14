@@ -7,9 +7,7 @@ const Blog = () => {
   const location = useLocation();
   const blogId = location.pathname.split('/').pop();
 
-  const { data: blogData, isLoading: blogLoading } = useGetBlogQuery(blogId, {
-    skip: blogId === 'new',
-  });
+  const { data: blogData, isLoading: blogLoading } = useGetBlogQuery(blogId);
 
   if (blogLoading) return <div>LOADING....</div>;
   return (

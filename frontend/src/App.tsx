@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from './components/Home';
 import Authentication from './components/Authentication';
 import Blog from './components/Blog';
+import NewBlog from './components/NewBlog';
 
 function App() {
 
@@ -17,7 +18,8 @@ function App() {
         <Route path='/' element={<PrivateRoute Component={Home} />} />
         <Route path='/signup' element={<Authentication type='signup'/>} />
         <Route path='/signin' element={<Authentication type='signin'/>} />
-        <Route path='/blog/:id' element={<Blog />} />
+        <Route path='/blog/:id' element={<PrivateRoute Component={Blog} />} />
+        <Route path='/new-blog' element={<PrivateRoute Component={NewBlog} />} />
       </Routes>
     </Router>
   );
