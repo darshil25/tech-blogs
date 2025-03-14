@@ -8,6 +8,11 @@ interface Blog {
   title: string;
   content: string;
   authorId: string;
+  author: {
+    firstName: string,
+    lastName: string
+  }
+  createdAt: Date
 }
 
 const Blogs = () => {
@@ -22,15 +27,15 @@ const Blogs = () => {
   if (blogsLoading) return <div>Loading.....</div>;
 
   return (
-    <div className="p-20">
+    <div className="p-20 flex flex-col items-center">
       {blogs &&
         blogs.map((blog: Blog, index: number) => (
           <Fragment key={index}>
             <BlogCard
-              authorName={'Darshil'}
+              authorName={blog.author.firstName + " " + blog.author.lastName}
               content={blog.content}
-              publishedDate="12 Dec 2024"
               title={blog.title}
+              createdAt={blog.createdAt}
               onClick={() => handleBlogClick(blog.id)}
             />
           </Fragment>

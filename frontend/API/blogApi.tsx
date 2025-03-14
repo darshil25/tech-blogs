@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://e3629dc9-backend.brazilservergame96.workers.dev',
+  baseUrl: 'https://44d1a7ae-backend.brazilservergame96.workers.dev',
   credentials: "include",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('token');
@@ -56,7 +56,7 @@ export const blogApi = createApi({
     }),
 
     getBlog: builder.query({
-      query: (id) => `${blogRoute}/:${id}`
+      query: (id) => `${blogRoute}/${id}`
     }),
 
     newBlog: builder.mutation({

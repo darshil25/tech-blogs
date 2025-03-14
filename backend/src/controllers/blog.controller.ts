@@ -8,9 +8,15 @@ export const createBlog = async (c: Context) => {
 
     const body = await c.req.json();
 
-    const { success } = CreateBlog.safeParse(body);
-    if (!success) {
-      return c.json({ message: 'Input is not valid' }, 409);
+    const result = CreateBlog.safeParse(body);
+    if (!result.success) {
+      return c.json(
+        {
+          message: 'Input is not valid',
+          errors: result.error.format(),
+        },
+        409
+      );
     }
 
     const blog = await prisma.post.create({
@@ -58,7 +64,14 @@ export const allBlogs = async (c: Context) => {
     const blogs = await prisma.post.findMany({
       where: {
         published: true,
-      },
+      }, include: {
+        author: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        }
+      }
     });
 
     return c.json(blogs);
@@ -78,7 +91,12 @@ export const getBlog = async (c: Context) => {
         id: blogId,
       },
       include: {
-        author: true,
+        author: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        },
       },
     });
 
