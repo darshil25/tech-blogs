@@ -3,6 +3,7 @@ import userRouter from './routes/user.routes';
 import blogRouter from './routes/blog.routes';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
+import { cors } from 'hono/cors';
 
 const app = new Hono<{
 	Bindings: {
@@ -14,6 +15,15 @@ const app = new Hono<{
 		prisma: any
 	}
 }>();
+
+app.use('*', cors({
+  origin: ['http://localhost:3000', 'http://localhost:5173', '*'],
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length'],
+  maxAge: 600,
+  credentials: true,
+}));
 
 app.use('*', async (c, next) => {
 	const prisma = new PrismaClient({
